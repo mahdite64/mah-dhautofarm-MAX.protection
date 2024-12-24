@@ -1,0 +1,136 @@
+--THIS SCRIPT HAS BEEN MADE BY MAHDITEEE,DO NOT TOUHCH THE SCRIPT OR IT WILL NOT WORK
+-- Check if the script has already been executed
+if getgenv().Executed then return end
+getgenv().Executed = true
+
+-- Private Guided Script Setup
+local authorizedKeys = { "mah is the best" } -- Replace with your private key
+local userKey = nil -- Variable to store the provided key
+
+-- Prompt for Key Input
+local InputBox = Instance.new("ScreenGui")
+local Frame = Instance.new("Frame")
+local TextBox = Instance.new("TextBox")
+local Submit = Instance.new("TextButton")
+
+InputBox.Name = "KeyPrompt"
+InputBox.Parent = game.CoreGui
+
+Frame.Parent = InputBox
+Frame.BackgroundColor3 = Color3.fromRGB(33, 33, 33)
+Frame.Position = UDim2.new(0.4, 0, 0.4, 0)
+Frame.Size = UDim2.new(0, 300, 0, 150)
+
+TextBox.Parent = Frame
+TextBox.PlaceholderText = "Enter your key"
+TextBox.Text = ""
+TextBox.Position = UDim2.new(0.1, 0, 0.2, 0)
+TextBox.Size = UDim2.new(0.8, 0, 0.3, 0)
+
+Submit.Parent = Frame
+Submit.Text = "Submit"
+Submit.BackgroundColor3 = Color3.fromRGB(53, 105, 255)
+Submit.Position = UDim2.new(0.3, 0, 0.6, 0)
+Submit.Size = UDim2.new(0.4, 0, 0.2, 0)
+
+-- Handle Key Submission
+local isAuthorized = false
+Submit.MouseButton1Click:Connect(function()
+    userKey = TextBox.Text
+    if table.find(authorizedKeys, userKey) then
+        isAuthorized = true
+        InputBox:Destroy()
+    else
+        TextBox.Text = "Invalid Key. Try again!"
+    end
+end)
+
+-- Wait for Authorization
+repeat task.wait() until isAuthorized
+
+-- Main Script Starts Here
+local ReplicatedStorage = game:GetService("ReplicatedStorage");
+local tablefind = table.find;
+local MainEvent = ReplicatedStorage.MainEvent;
+local Flags = {
+    "checkingSPEED",
+    "BANREMOTE",
+    "PERMAIDBAN",
+    "KICKREMOTE",
+    "BR_KICKPC",
+    "BR_KICKMOBILE",
+    "OneMoreTime",
+    "TeleportDetect",
+    "CHECKER_1",
+    "CHECKER",
+    "GUI_CHECK",
+    "VirusCough",
+    "BreathingHAMON"
+};
+
+local Player = game:GetService("Players").LocalPlayer;
+getsenv(Player.Character.Animate).checkingSPEED = function()
+    return;
+end;
+
+for i, v in pairs(getconnections(Player.Character.HumanoidRootPart:GetPropertyChangedSignal("CFrame"))) do
+    v:Disable();
+end;
+
+Player.CharacterAdded:Connect(function()
+    getsenv(Player.Character.Animate).checkingSPEED = function()
+        return;
+    end;
+end);
+
+local __namecall;
+__namecall = hookmetamethod(game, "__namecall", function(...)
+    local args = { ... }
+    local self = args[1]
+    local method = getnamecallmethod()
+    if method == "FireServer" and self == MainEvent and tablefind(Flags, args[2]) then
+        return;
+    end;
+    return __namecall(...)
+end);
+
+local __newindex;
+__newindex = hookmetamethod(game, "__newindex", function(t, k, v)
+    if not checkcaller() and t:IsA("Humanoid") and (k == "WalkSpeed" or k == "JumpPower") then
+        return;
+    end;
+    return __newindex(t, k, v);
+end);
+
+game.Workspace.FallenPartsDestroyHeight = 0/0
+
+local modids = {
+    97123240,
+    3718161806,
+    -- Add more moderator IDs here
+}
+
+for i, v in pairs(game.Players:GetPlayers()) do
+    if table.find(modids, v.UserId) then
+        game.Players.LocalPlayer:Kick("mod")
+    end
+end
+
+game.Players.PlayerAdded:Connect(function(plr)
+    if table.find(modids, plr.UserId) then
+        game.Players.LocalPlayer:Kick("mod")
+    end
+end)
+
+local vu = game:GetService("VirtualUser")
+game:GetService("Players").LocalPlayer.Idled:connect(function()
+    vu:Button2Down(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
+    wait(1)
+    vu:Button2Up(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
+end)
+
+for i, v in pairs(workspace:GetDescendants()) do 
+    if v:IsA("Seat") then 
+        v:Destroy() 
+    end 
+end
